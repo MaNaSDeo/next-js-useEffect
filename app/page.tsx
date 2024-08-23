@@ -1,7 +1,11 @@
-import React from "react";
+import Counter from "@/Components/Counter/page";
 
 function Home() {
-  return <main>Home</main>;
+  return (
+    <main>
+      <Counter />
+    </main>
+  );
 }
 
 export default Home;
