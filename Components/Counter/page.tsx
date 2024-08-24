@@ -1,30 +1,31 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 import styles from "./Counter.module.scss";
+import { useCounter } from "@/hooks/useCounter";
 
 function Counter() {
-  const [count, setCount] = useState<number>(0);
+  const { count, handleCount, resetCount } = useCounter(0);
 
-  const handleIncrease = () => {
-    setCount((prev) => {
-      return prev + 1;
-    });
-  };
-  const handleDecrease = () => {
-    setCount((prev) => {
-      return prev - 1;
-    });
-  };
+  useEffect(() => {
+    console.log(
+      `I'm inside the useEffect hook. The current count is: ${count}`
+    );
+
+    return () => {
+      console.log(
+        `Cleaning up anything that was setup above. Last count was: ${count}`
+      );
+    };
+  }, [count]);
 
   return (
     <section className={styles.landing}>
       <p className={styles.count}>{count}</p>
       <div className={styles.btnContainer}>
-        <button onClick={handleIncrease}>Increase</button>
-        <button type="button" onClick={handleDecrease}>
-          Decrease
-        </button>
+        <button onClick={() => handleCount(1)}>Increase</button>
+        <button onClick={() => resetCount()}>Reset</button>
+        <button onClick={() => handleCount(-1)}>Decrease</button>
       </div>
     </section>
   );
